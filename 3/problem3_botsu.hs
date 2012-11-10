@@ -21,10 +21,14 @@ main = print $ maximum $ primeFactors num
 -- ステップ 4 [編集]
 -- 探索リストの最大値が素数リストの最大値の平方よりも小さい場合、素数リストおよび探索リストに残っている数が素数となる。探索リストの最大値が素数リストの最大値の平方よりも大きい場合、ステップ 2 に戻る。
 primes :: Integer -> [Integer]
-primes end = sieve end (2:[3,5..])
+primes maxNum = sieve maxNum (2:[3,5..maxNum])
 
 sieve :: Integer -> [Integer] -> [Integer]
-sieve end (n:ns) = n:(sieve end $ takeWhile (\x -> end >= x^2) $ filter (\x -> (x `mod` n) /= 0) ns)
+sieve maxNum (n:ns)
+  | (fromInteger maxNum) < sqrt (fromInteger n) = n:ns
+  | otherwise = n:(sieve (last listForSearch) $ listForSearch)
+  where
+    listForSearch = filter (\x -> (x `mod` n) /= 0) ns
 sieve _ [] = []
 
 primeFactors :: Integer -> [Integer]

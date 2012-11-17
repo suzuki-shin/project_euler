@@ -47,9 +47,11 @@ nums = [
   [20, 73, 35, 29, 78, 31, 90,  1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57,  5, 54],
   [ 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48]
   ]
-inputPos = [(x,y)|x<-[0..19], y<-[0..19]]
 
 type Pos = (Int, Int)
+
+inputPos :: [Pos]
+inputPos = [(x,y)|x<-[0..19], y<-[0..19]]
 
 validPoss :: [Pos] -> Bool
 validPoss = all validPos
@@ -71,7 +73,7 @@ rightDown :: Pos -> [Pos]
 rightDown (x,y) = [(x,y),(x+1,y-1),(x+2,y-2),(x+3,y-3)]
 
 validLinesPos :: [[Pos]]
-validLinesPos = filter validPoss $ (map up inputPos) ++ (map side inputPos) ++ (map rightUp inputPos) ++ (map rightDown inputPos)
+validLinesPos = filter validPoss $ foldl (\pss f -> (map f inputPos) ++ pss) [] [up, side, rightUp, rightDown]
 
 possToNums :: [[Pos]] -> [[Integer]]
 possToNums = map (\ps -> map (\(x,y) -> (nums!!y!!x)) ps)

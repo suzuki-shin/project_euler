@@ -10,9 +10,9 @@ type Year = Int
 type Month = Int
 type Day = Int
 
-data Wday = Mon | Tue | Wed | Thu | Fri | Sat | Sun deriving (Show, Enum)
+data Wday = Mon | Tue | Wed | Thu | Fri | Sat | Sun deriving (Show, Enum, Bounded)
 wdays :: [Wday]
-wdays = cycle [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+wdays = cycle [minBound..maxBound]
 
 main = print $ length $ filter isFirstDaySunday $ filter (\(y,_,_,_) -> y >= 1901) dateWdayPairs
 

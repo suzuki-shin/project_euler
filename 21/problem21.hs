@@ -7,3 +7,28 @@
 
 -- それでは10000未満の友愛数の和を求めよ.
 
+import Data.Maybe
+
+-- | 約数のリストを返す
+-- >>> divisors 1
+-- [1]
+-- >>> divisors 2
+-- [1,2]
+-- >>> divisors 6
+-- [1,2,3,6]
+divisors :: Integer -> [Integer]
+divisors n = filter (\x -> (n `mod` x) == 0) [1..n]
+
+sumTrueDivisors :: Integer -> Integer
+sumTrueDivisors 0 = 0
+sumTrueDivisors n = sum $ init $ divisors n
+
+friendNum :: Integer -> Maybe Integer
+friendNum n
+  | sumTrueDivisors m == n && m /= n = Just m
+  | otherwise = Nothing
+  where
+    m = sumTrueDivisors n
+
+main :: IO ()
+main = print $ sum $ catMaybes $ map friendNum [1..9999]

@@ -1,9 +1,12 @@
 import Data.List (find)
 import Data.Maybe (fromJust)
 import Data.Function.Memoize (memoize)
+import Control.Applicative ((<$>))
 
 main :: IO ()
-main = print $ question 500
+main = do
+  num <- getLine
+  print $ (question . read) num
 
 triangularNumber :: Int -> Int
 triangularNumber 1 = 1
@@ -21,4 +24,5 @@ factorsOf n
 
 question :: Int -> (Int, [Int])
 question num =
+--   fromJust $ find (\(_, x) -> length x >= num) $ map (factorsOf . triangularNumber) [1..]
   fromJust $ find (\(_, x) -> length x >= num) $ map (factorsOf . triangularNumberMemo) [1..]

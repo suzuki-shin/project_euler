@@ -4,3 +4,9 @@ cabal-dev
 *.hi
 *.chi
 *.chs.h
+/.cabal-sandbox/
+/LICENSE
+/Setup.hs
+/cabal.sandbox.config
+/project-euler.cabal
+*.class
